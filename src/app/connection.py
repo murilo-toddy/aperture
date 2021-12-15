@@ -36,15 +36,16 @@ class Connection:
             print(self.cursor.fetchone())
 
 
-    def exec(self, command: str, *args, cb: callable = None):
+    def exec(self, command: str, *args, func: callable = None):
         self.cursor.execute(command, args)
+        return func(self.cursor) if func else None
 
 
     def commit(self):
         self.connection.commit()
 
 
-    def exec_and_commit(self, command: str, *args):
+    def exec_and_commit(self, command: str, *args, func: callable = None):
         self.exec(command, *args)
         self.commit()
 
