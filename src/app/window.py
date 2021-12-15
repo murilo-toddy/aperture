@@ -59,4 +59,10 @@ class WindowHandler:
         self.obj = self.builder.get_object
         self.obj("home_window").show_all()
         self.load_default_config()
-        
+    
+
+    def show_error_window(self):
+        self.obj("error_dialog").show_all()
+
+    def close_error_window(self):
+        self.obj("error_dialog").close()

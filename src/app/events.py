@@ -21,6 +21,11 @@ class EventsHandler:
     
     def __invalid_entry(self):
         print("Invalid input")
+        window.WindowHandler().show_error_window()
+
+    
+    def on_error_button_clicked(self, button):
+        window.WindowHandler().close_error_window()
 
 
     def on_login_button_clicked(self, button):
@@ -47,5 +52,5 @@ class EventsHandler:
 
     def on_login_window_remove(self, *args):
         if self.__debug:
-            print("App Closed")
+            print("Login Window closed")
         
