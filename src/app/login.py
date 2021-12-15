@@ -1,5 +1,6 @@
 from connection import Connection
 import window
+import home
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -11,11 +12,13 @@ def register_user(name: str, surname: str, date: str):
 
     Connection().exec_and_commit(query, name, surname, date)
     print("Person added")
+    window.WindowHandler().hide_login_window()
+    home.home_screen()
 
 
 def prompt_info():
-    window.WindowHandler().login_window()
-    print("Precisa fazer login!")
+    window.WindowHandler().show_login_window()
+    print("No user found, prompting login")
     Gtk.main()
         
     
@@ -23,7 +26,9 @@ def prompt_info():
 def login():
     query = "SELECT * FROM user_info"
     connection = Connection()
-    user = connection.exec(query)
+    user = connection.exec(query, func=lambda cur: cur.fetchall())
 
-    if user is None:
+    if not user:
         prompt_info()
+
+    home.home_screen()

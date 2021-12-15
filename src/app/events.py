@@ -34,6 +34,7 @@ class EventsHandler:
             print(f"Nome: {name}")
             print(f"Sobrenome: {surname}")
             print(f"Nascimento: {date}")
+            print()
 
         # Validação dos dados de entrada
         valid_input = (Regexes.date.match(date) and name != "" and surname != "")
@@ -48,4 +49,5 @@ class EventsHandler:
         if self.__debug:
             print("App Closed")
         
-        Gtk.main_quit()
+        # w = window.WindowHandler().obj("login_window")
+        # w.close()
