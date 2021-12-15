@@ -38,6 +38,7 @@ class WindowHandler:
         )
         
 
+    """Login Window"""
     def show_login_window(self):
         self.obj = self.builder.get_object
         self.obj("login_window").show_all()
@@ -46,7 +47,8 @@ class WindowHandler:
 
 
     def hide_login_window(self):
-        print("Closing")
+        if self.__debug:
+            print("Closing login window")
         self.builder.get_object("login_window").close()
         self.obj("login_window").close()
 
@@ -55,14 +57,23 @@ class WindowHandler:
         return self.obj("login_name").get_text(), self.obj("login_surname").get_text(), self.obj("login_birthday").get_text()
 
 
+    """Error Window"""
+    def show_error_window(self):
+        if self.__debug:
+            print("Opening error window")
+        self.obj("error_dialog").show_all()
+
+
+    def close_error_window(self):
+        if self.__debug:
+            print("Closing error window")
+        self.obj("error_dialog").close()
+
+
+    """Home Window"""
     def show_home_window(self):
+        if self.__debug:
+            print("Opening home window")
         self.obj = self.builder.get_object
         self.obj("home_window").show_all()
         self.load_default_config()
-    
-
-    def show_error_window(self):
-        self.obj("error_dialog").show_all()
-
-    def close_error_window(self):
-        self.obj("error_dialog").close()

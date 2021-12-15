@@ -123,18 +123,45 @@ Verifique os dados e tente novamente</property>
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkLabel">
+          <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="margin-left">80</property>
-            <property name="margin-right">80</property>
-            <property name="margin-top">29</property>
-            <property name="margin-bottom">39</property>
-            <property name="label" translatable="yes">Aperture</property>
-            <attributes>
-              <attribute name="weight" value="bold"/>
-              <attribute name="size" value="20480"/>
-            </attributes>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="margin-left">93</property>
+                <property name="margin-right">22</property>
+                <property name="margin-bottom">19</property>
+                <property name="stock">gtk-home</property>
+                <property name="icon_size">6</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="margin-left">19</property>
+                <property name="margin-right">142</property>
+                <property name="margin-top">35</property>
+                <property name="margin-bottom">50</property>
+                <property name="label" translatable="yes">Aperture</property>
+                <attributes>
+                  <attribute name="weight" value="bold"/>
+                  <attribute name="size" value="23552"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -146,6 +173,7 @@ Verifique os dados e tente novamente</property>
           <object class="GtkLabel" id="home_personal_info">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="margin-bottom">34</property>
             <property name="label" translatable="yes">Bem vindo(a)
 </property>
             <property name="justify">center</property>
@@ -162,13 +190,69 @@ Verifique os dados e tente novamente</property>
             <property name="can-focus">False</property>
             <property name="orientation">vertical</property>
             <child>
-              <placeholder/>
+              <object class="GtkButton">
+                <property name="label" translatable="yes">To-Do List</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="margin-left">18</property>
+                <property name="margin-right">20</property>
+                <property name="margin-bottom">4</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
             </child>
             <child>
-              <placeholder/>
+              <object class="GtkButton">
+                <property name="label" translatable="yes">Acompanhamento Acadêmico</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="margin-left">16</property>
+                <property name="margin-right">19</property>
+                <property name="margin-top">9</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
             </child>
             <child>
-              <placeholder/>
+              <object class="GtkButton">
+                <property name="label" translatable="yes">Atualizar Informações Pessoais</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="margin-left">18</property>
+                <property name="margin-right">19</property>
+                <property name="margin-top">12</property>
+                <property name="margin-bottom">12</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton">
+                <property name="label" translatable="yes">Calendário</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="margin-left">16</property>
+                <property name="margin-right">18</property>
+                <property name="margin-bottom">22</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
             </child>
           </object>
           <packing>
@@ -177,10 +261,51 @@ Verifique os dados e tente novamente</property>
             <property name="position">2</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="margin-left">359</property>
+                <property name="margin-right">10</property>
+                <property name="margin-bottom">11</property>
+                <property name="stock">gtk-quit</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton">
+                <property name="label" translatable="yes">Sair</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="margin-right">19</property>
+                <property name="margin-bottom">11</property>
+                <signal name="clicked" handler="on_exit_button_clicked" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
       </object>
     </child>
   </object>
-  <object class="GtkListStore" id="liststore1"/>
   <object class="GtkWindow" id="login_window">
     <property name="can-focus">False</property>
     <property name="window-position">center</property>
@@ -191,14 +316,42 @@ Verifique os dados e tente novamente</property>
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkLabel">
+          <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="margin-top">14</property>
-            <property name="label" translatable="yes">Aperture</property>
-            <attributes>
-              <attribute name="size" value="20480"/>
-            </attributes>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="margin-left">71</property>
+                <property name="margin-right">13</property>
+                <property name="margin-top">13</property>
+                <property name="margin-bottom">4</property>
+                <property name="stock">gtk-orientation-portrait</property>
+                <property name="icon_size">3</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="margin-top">14</property>
+                <property name="label" translatable="yes">Aperture</property>
+                <attributes>
+                  <attribute name="size" value="20480"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -224,7 +377,7 @@ abaixo.</property>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
         <child>
@@ -261,7 +414,7 @@ abaixo.</property>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
+            <property name="position">3</property>
           </packing>
         </child>
         <child>
@@ -298,7 +451,7 @@ abaixo.</property>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">3</property>
+            <property name="position">4</property>
           </packing>
         </child>
         <child>
@@ -335,7 +488,7 @@ abaixo.</property>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">4</property>
+            <property name="position">5</property>
           </packing>
         </child>
         <child>
@@ -350,7 +503,7 @@ abaixo.</property>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">5</property>
+            <property name="position">6</property>
           </packing>
         </child>
       </object>

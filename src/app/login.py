@@ -19,7 +19,6 @@ def register_user(name: str, surname: str, date: str):
 def prompt_info():
     window.WindowHandler().show_login_window()
     print("No user found, prompting login")
-    Gtk.main()
         
 
 def login():
@@ -30,4 +29,8 @@ def login():
     if not user:
         prompt_info()
 
-    home.home_screen()
+    else:
+        home.home_screen()
+    
+    Gtk.main()
+

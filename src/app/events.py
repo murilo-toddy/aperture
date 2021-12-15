@@ -1,5 +1,4 @@
 import gi
-
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -24,6 +23,10 @@ class EventsHandler:
         window.WindowHandler().show_error_window()
 
     
+    def on_exit_button_clicked(self, button):
+        Gtk.main_quit()
+
+
     def on_error_button_clicked(self, button):
         window.WindowHandler().close_error_window()
 
