@@ -1,8 +1,9 @@
-CREATE TABLE atividades (
-    nome        VARCHAR(50)     NOT NULL,
-    deadline    DATE            NOT NULL
-);
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+
 
 CREATE TABLE user_info (
-    nome        VARCHAR(50)     NOT NULL
-)
+    name        VARCHAR(20)     NOT NULL,
+    surname     VARCHAR(20)     NOT NULL,
+    birthday    DATE            NOT NULL
+);
