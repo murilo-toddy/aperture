@@ -1,13 +1,13 @@
 # Aperture
 
-**Aperture** um aplicativo para ajudar estudantes do ensino médio a se prepararem para o vestibular
+**Aperture** é um aplicativo para ajudar estudantes do ensino médio a se prepararem para o vestibular
 
 ## Features:
 
 1. Todo-List
 2. Acompanhamento de Notas
 3. Áreas de Afinidade
-4. Calendário de Vestibulare
+4. Calendário de Vestibulares
 
 
 ## Dependências:
