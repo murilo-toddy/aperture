@@ -49,5 +49,3 @@ class EventsHandler:
         if self.__debug:
             print("App Closed")
         
-        # w = window.WindowHandler().obj("login_window")
-        # w.close()

@@ -38,7 +38,6 @@ class WindowHandler:
         )
         
 
-
     def show_login_window(self):
         self.obj = self.builder.get_object
         self.obj("login_window").show_all()

@@ -21,7 +21,6 @@ def prompt_info():
     print("No user found, prompting login")
     Gtk.main()
         
-    
 
 def login():
     query = "SELECT * FROM user_info"

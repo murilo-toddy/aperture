@@ -46,8 +46,9 @@ class Connection:
 
 
     def exec_and_commit(self, command: str, *args, func: callable = None):
-        self.exec(command, *args)
+        return_value = self.exec(command, *args, func=func)
         self.commit()
+        return return_value
 
 
     def disconnect(self):

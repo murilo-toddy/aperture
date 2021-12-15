@@ -7,4 +7,4 @@ import window
 def home_screen():
     print("Opening home")
     window.WindowHandler().show_home_window()
-    # window.WindowHandler().hide_login_window()
+    
