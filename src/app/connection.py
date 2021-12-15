@@ -36,9 +36,8 @@ class Connection:
             print(self.cursor.fetchone())
 
 
-    def exec(self, command: str, *args):
+    def exec(self, command: str, *args, cb: callable = None):
         self.cursor.execute(command, args)
-        return self.cursor.fetchone()
 
 
     def commit(self):
@@ -46,7 +45,7 @@ class Connection:
 
 
     def exec_and_commit(self, command: str, *args):
-        self.exec(command, args)
+        self.exec(command, *args)
         self.commit()
 
 
