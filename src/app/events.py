@@ -28,14 +28,17 @@ class EventsHandler:
 
 
     def on_error_button_clicked(self, button):
-        window.WindowHandler().close_error_window()
+        window.WindowHandler().hide_error_window()
 
 
-    def on_login_button_clicked(self, button):
+    def __get_user_data(self, update=False):
         if self.__debug:
             print("Login button clicked")
         
-        name, surname, date = window.WindowHandler().get_login_info()
+        if update:
+            name, surname, date = window.WindowHandler().get_update_info()
+        else:
+            name, surname, date = window.WindowHandler().get_login_info()
 
         if self.__debug:
             print("\n-- Personal Info --")
@@ -48,12 +51,65 @@ class EventsHandler:
         valid_input = (Regexes.date.match(date) and name != "" and surname != "")
         if not valid_input:
             self.__invalid_entry()
-            return
+            raise ValueError()
 
-        login.register_user(name, surname, date)
+        return name, surname, date
+
+
+    def on_login_button_clicked(self, button):
+        try: 
+            name, surname, date = self.__get_user_data()
+            login.register_user(name, surname, date)
+        except: 
+            return
+            
 
 
     def on_login_window_remove(self, *args):
         if self.__debug:
             print("Login Window closed")
+
+
+    def on_todo_button_clicked(self, button):
+        print("Todo button clicked")
+
+    
+    def on_acomp_button_clicked(self, button):
+        print("Acomp button clicked")
+
+    
+    """Calendar Events"""
+    def on_calendar_button_clicked(self, button):
+        print("Calendar button clicked")
+
+
+    """Update Info Events"""
+    def on_updateinfo_button_clicked(self, button):
+        if self.__debug:
+            print("Update info button clicked")
         
+        window.WindowHandler().hide_home_window()
+        window.WindowHandler().show_updateinfo_window()
+        
+    
+    def on_update_button_clicked(self, button):
+        try:
+            name, surname, date = self.__get_user_data(update=True)
+            login.update_user(name, surname, date)
+            window.WindowHandler().load_default_config()
+        except:
+            return
+
+    
+    def on_updateinfo_window_remove(self, *args):
+        window.WindowHandler().show_home_window()
+
+
+
+
+    """Critical Error Events"""
+    def on_criticalerror_button_clicked(self, button):
+        window.WindowHandler().hide_criticalerror_window()
+
+    def on_criticalerror_window_remove(self, *args):
+        Gtk.main_quit()

@@ -6,3 +6,4 @@ import window
 
 def home_screen():
     window.WindowHandler().show_home_window()
+    

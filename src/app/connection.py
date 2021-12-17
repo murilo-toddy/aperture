@@ -41,7 +41,7 @@ class Connection:
         return func(self.cursor) if func else None
 
 
-    def commit(self):
+    def commit(self) -> None:
         self.connection.commit()
 
 

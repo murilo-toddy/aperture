@@ -80,7 +80,7 @@ class WindowHandler:
     def show_error_window(self):
         self.__show_window(self.__error_window_name)
 
-    def close_error_window(self):
+    def hide_error_window(self):
         self.__hide_window(self.__error_window_name)
 
     
