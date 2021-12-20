@@ -79,14 +79,14 @@ class LoginWindow():
 class UpdateWindow():
     @staticmethod
     def get_info():
-        name = WindowHandler().obj("update_name").get_text() 
-        surname = WindowHandler().obj("update_surname").get_text() 
-        date = WindowHandler().obj("update_birthday").get_text()
+        name = WindowHandler().get_text("update_name")
+        surname = WindowHandler().get_text("update_surname")
+        date = WindowHandler().get_text("update_birthday")
         UpdateWindow.hide()
         return name, surname, date
 
     @staticmethod
-    def show(): Window.show("updateinfo_widow")
+    def show(): Window.show("updateinfo_window")
 
     @staticmethod
     def hide(): Window.hide("updateinfo_window")

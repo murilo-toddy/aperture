@@ -58,6 +58,7 @@ class EventsHandler:
 
         return name, surname, date
 
+
     """Collect user data"""
     def on_login_button_clicked(self, button) -> None:
         try: 
@@ -71,7 +72,6 @@ class EventsHandler:
         try:
             name, surname, date = self.__get_user_data(update=True)
             utils.update_user(name, surname, date)
-            w.HomeWindow.show()
         except:
             return
 
@@ -104,6 +104,7 @@ class EventsHandler:
 
     
     def on_updateinfo_window_remove(self, *args) -> None:
+        w.UpdateWindow.hide()
         w.HomeWindow.show()
 
 

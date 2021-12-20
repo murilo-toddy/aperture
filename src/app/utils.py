@@ -25,7 +25,5 @@ def update_user(name: str, surname: str, date: str) -> None:
         query = "UPDATE user_info SET name = %s, surname = %s, birthday = TO_DATE(%s, 'DD/MM/YYYY')"
         Connection().exec_and_commit(query, name, surname, date)
         print("Personal info updated")
-        w.UpdateWindow.hide()
-        w.WindowHandler().load_default_config()
     except:
         w.CriticalErrorWindow.show()
