@@ -7,10 +7,8 @@ from connection import Connection
 
 class WindowHandler:
     def __new__(cls, debug=False):
-        if not hasattr(cls, "instance"):
-            cls.instance = super(WindowHandler, cls).__new__(cls)
+        if not hasattr(cls, "instance"): cls.instance = super(WindowHandler, cls).__new__(cls)
         return cls.instance
-    
     
     def __init__(self, debug=False, file="src/interface/main.glade"):
         self.__debug = debug
@@ -23,88 +21,134 @@ class WindowHandler:
         if self.__debug:
             print("Established connection with Glade")
 
-        self.__login_window_name = "login_window"
-        self.__home_window_name = "home_window"
-        self.__error_window_name = "error_dialog"
-        self.__home_window_name = "home_window"
-        self.__updateinfo_window_name = "updateinfo_window"
-        self.__criticalerror_window_name = "criticalerror_window"
-
-
-    def __update_obj(self): self.obj = self.builder.get_object
-
-
-    def __show_window(self, window_name: str):
-        self.__update_obj()
-        if self.__debug:
-            print(f"Opening {window_name}")
         
-        self.obj(window_name).show_all()
+
+    # def get_text(self, field): return self.obj(field).get_text()
+
+    def update_obj(self): self.obj = self.builder.get_object
 
 
-    def __hide_window(self, window_name: str):
-        if self.__debug:
-            print(f"Hiding {window_name}")
+    def show_window(self, window_name: str):
+        self.obj = self.builder.get_object
+        # if self.__debug:
+            # print(f"Opening {window_name}")
+        self.obj(window_name).show()
+
+    def hide_window(self, window_name: str):
+        # if self.__debug:
+        print(f"Hiding {window_name}")
         self.obj(window_name).close()
 
 
     def load_default_config(self):
         query = "SELECT * FROM user_info"
-        connection = Connection()
-        user = connection.exec(query, func=lambda cur: cur.fetchall())
+        user = Connection().exec(query, func=lambda cur: cur.fetchall())
         personal_info = list(user[0])
         self.name = personal_info[0]
         self.surname = personal_info[1]
         self.birthday = personal_info[2]
 
-        self.obj("home_personal_info").set_text(
+        self.builder.get_object("home_personal_info").set_text(
             f"Seja bem vindo(a),\n{self.name} {self.surname}"
         )
+
+
+
+class Window:
+    def __new__(cls, debug: bool = False, window_name: str = None):
+        if not hasattr(cls, "instance"): cls.instance = super(Window, cls).__new__(cls)
+        return cls.instance
+
+    def __init__(self, debug: bool = False, window_name: str = None):
+        self.__debug = debug
+        self.__window_name = window_name
+
+    def show(self):
+        self.window = WindowHandler().show_window(window_name = self.__window_name)
+
+    def hide(self):
+        WindowHandler().hide_window(window_name = self.__window_name)
+
+
+
+class LoginWindow(Window):
+    def __new__(cls, debug: bool = False, window_name: str = None):
+        if not hasattr(cls, "instance"): cls.instance = super(Window, cls).__new__(cls)
+        return cls.instance
         
+    def __init__(self, debug=False, window_name: str = "login_window"):
+        Window.__init__(self, debug, window_name)
+        self.__window_name = window_name
 
-    """Login Window"""
-    def show_login_window(self):
-        self.__show_window(self.__login_window_name)
-
-    def hide_login_window(self):
-        self.__hide_window(self.__login_window_name)
-
-    def get_login_info(self):
-        return self.obj("login_name").get_text(), self.obj("login_surname").get_text(), self.obj("login_birthday").get_text()
-
-    def get_update_info(self):
-        return self.obj("update_name").get_text(), self.obj("update_surname").get_text(), self.obj("update_birthday").get_text()
+    def get_info(self):        
+        name = WindowHandler().obj("login_name").get_text()
+        surname = WindowHandler().obj("login_surname").get_text()
+        date = WindowHandler().obj("login_birthday").get_text()
+        self.hide()
+        return name, surname, date
 
 
-    """Error Window"""
-    def show_error_window(self):
-        self.__show_window(self.__error_window_name)
 
-    def hide_error_window(self):
-        self.__hide_window(self.__error_window_name)
-
+class UpdateWindow(Window):
+    def __new__(cls, debug: bool = False, window_name: str = "updateinfo_window"):
+        if not hasattr(cls, "instance"):
+            cls.instance = super(UpdateWindow, cls).__new__(cls)
+        return cls.instance
     
-    """Critical Error Window"""
-    def show_criticalerror_window(self):
-        self.__show_window(self.__criticalerror_window_name)
+    def __init__(self, debug=False, window_name: str = "updateinfo_window"):
+        Window.__init__(self, debug, window_name)
+        self.__window_name = window_name
 
-    def hide_criticalerror_window(self):
-        self.__hide_window(self.__criticalerror_window_name)
-
-
-    """Home Window"""
-    def show_home_window(self):
-        self.__show_window(self.__home_window_name)
-        self.load_default_config()
-
-    def hide_home_window(self):
-        self.__hide_window(self.__home_window_name)
+    def get_info(self):
+        name = WindowHandler().obj("update_name").get_text() 
+        surname = WindowHandler().obj("update_surname").get_text() 
+        date = WindowHandler().obj("update_birthday").get_text()
+        self.hide()
+        return name, surname, date
 
 
-    """Update Info Window"""
-    def show_updateinfo_window(self):
-        self.__show_window(self.__updateinfo_window_name)
 
-    def hide_updateinfo_window(self):
-        self.__hide_window(self.__updateinfo_window_name)
-        
+class HomeWindow(Window):
+    def __new__(cls, debug: bool = False, window_name: str = "home_window"):
+        if not hasattr(cls, "instance"): cls.instance = super(HomeWindow, cls).__new__(cls)
+        return cls.instance
+    
+    def __init__(self, debug=False, window_name: str = "home_window"):
+        Window.__init__(self, debug, window_name)
+        self.__window_name = window_name
+
+    def show(self):
+        WindowHandler().load_default_config()
+        WindowHandler().show_window(window_name = self.__window_name)
+
+
+
+class LoginErrorWindow(Window):
+    def __new__(cls, debug: bool = False, window_name: str = "error_login_dialog"):
+        if not hasattr(cls, "instance"): cls.instance = super(LoginErrorWindow, cls).__new__(cls)
+        return cls.instance
+    
+    def __init__(self, debug=False, window_name: str = "error_login_dialog"):
+        Window.__init__(self, debug, window_name)
+        self.__window_name = window_name
+
+
+class UpdateErrorWindow(Window):
+    def __new__(cls, debug: bool = False, window_name: str = "error_update_dialog"):
+        if not hasattr(cls, "instance"): cls.instance = super(UpdateErrorWindow, cls).__new__(cls)
+        return cls.instance
+    
+    def __init__(self, debug=False, window_name: str = "error_update_dialog"):
+        Window.__init__(self, debug, window_name)
+        self.__window_name = window_name
+
+
+
+class CriticalErrorWindow(Window):
+    def __new__(cls, debug: bool = False, window_name: str = "criticalerror_window"):
+        if not hasattr(cls, "instance"): cls.instance = super(CriticalErrorWindow, cls).__new__(cls)
+        return cls.instance
+    
+    def __init__(self, debug=False, window_name: str = "criticalerror_window"):
+        Window.__init__(self, debug, window_name)
+        self.__window_name = window_name

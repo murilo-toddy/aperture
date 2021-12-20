@@ -1,4 +1,5 @@
 from configparser import ConfigParser
+from typing import Any
 import psycopg2
 
 class Connection:
@@ -13,7 +14,7 @@ class Connection:
         self.__connect()
 
 
-    def __read_config(self, parsefile="database.ini", database="postgresql"):
+    def __read_config(self, parsefile="database.ini", database="postgresql") -> dict:
         parser = ConfigParser()
         parser.read(parsefile)
 
@@ -23,7 +24,7 @@ class Connection:
         return dict(parser.items(database))
 
 
-    def __connect(self):
+    def __connect(self) -> None:
         if self.__debug:
             print("Connecting to database")
 
@@ -36,7 +37,7 @@ class Connection:
             print(self.cursor.fetchone())
 
 
-    def exec(self, command: str, *args, func: callable = None):
+    def exec(self, command: str, *args, func: callable = None) -> Any:
         self.cursor.execute(command, args)
         return func(self.cursor) if func else None
 
@@ -45,13 +46,13 @@ class Connection:
         self.connection.commit()
 
 
-    def exec_and_commit(self, command: str, *args, func: callable = None):
+    def exec_and_commit(self, command: str, *args, func: callable = None) -> Any:
         return_value = self.exec(command, *args, func=func)
         self.commit()
         return return_value
 
 
-    def disconnect(self):
+    def disconnect(self) -> None:
         if self.connection:
             self.connection.close()
             if self.__debug:
