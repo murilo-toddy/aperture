@@ -11,7 +11,8 @@ CREATE TABLE user_info (
 
 CREATE TABLE subject (
     name        VARCHAR(10)     NOT NULL,
-    year        DATE            NOT NULL
+    year        DATE            NOT NULL,
+    CONSTRAINT pk_subject PRIMARY KEY(name, year)
 );
 
 
@@ -24,4 +25,9 @@ CREATE TABLE grade (
     CONSTRAINT fk_grade FOREIGN KEY(subject, year)
                 REFERENCES subject(name, year)
                 ON DELETE CASCADE
+);
+
+
+CREATE TABLE tasks (
+    name        VARCHAR(30)     NOT NULL
 );
