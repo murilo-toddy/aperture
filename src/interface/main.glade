@@ -769,6 +769,7 @@ Verifique os dados e tente novamente</property>
               <object class="GtkImage">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="margin-left">117</property>
                 <property name="margin-top">16</property>
                 <property name="margin-bottom">17</property>
                 <property name="stock">gtk-dialog-error</property>
@@ -820,6 +821,8 @@ Verifique os dados e tente novamente</property>
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="margin-left">60</property>
+            <property name="margin-right">41</property>
             <property name="margin-top">6</property>
             <property name="margin-bottom">32</property>
             <property name="label" translatable="yes">Entrada inválida
