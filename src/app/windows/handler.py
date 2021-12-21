@@ -80,13 +80,13 @@ class WindowHandler:
         self.tasks_tree_view.set_model(self.task_list_store)
 
 
-    def update_selected_task(self, user_data):
+    def update_selected_task(self, user_data) -> None:
         selected = user_data.get_selected()[1]
         if selected:
             self.selected_task = selected
 
 
-    def add_task(self):
+    def add_task(self) -> None:
         if self.__debug:
             print("Adding task")
 
@@ -101,7 +101,7 @@ class WindowHandler:
                 print("You cannot have duplicate task names") 
 
 
-    def remove_task(self):
+    def remove_task(self) -> None:
         query = "DELETE FROM tasks WHERE name = %s"
         try:
             task_name = self.task_list_store.get_value(self.selected_task, 0)
@@ -117,7 +117,7 @@ class WindowHandler:
 
 
     # Grades Window Handler
-    def load_grades(self):
+    def load_grades(self) -> None:
         if self.__debug: print("Loading grades")
         query = "SELECT * FROM grade"
         grades = Connection().exec(query, func=lambda cur: cur.fetchall())
@@ -130,17 +130,16 @@ class WindowHandler:
         Connection().exec_and_commit(query, grade, subject)
 
 
-    def __saving_grades_error(self):
+    def __saving_grades_error(self) -> None:
         SubjectsWindow.hide()
         GradesErrorWindow.show()
 
-    def __saving_grades_success(self):
+    def __saving_grades_success(self) -> None:
         SubjectsWindow.hide()
         GradesUpdatedWindow.show()
 
     def save_grades(self) -> None:
         if self.__debug: print("Saving grades")
-
         try:
             port_grade = float(self.obj("portuguese_grade").get_text())
             math_grade = float(self.obj("math_grade").get_text())
@@ -154,6 +153,7 @@ class WindowHandler:
             self.__saving_grades_error()
             return
 
+        # Checks if grade is within desired range
         if port_grade > 10 or math_grade > 10 or hist_grade > 10 or geo_grade > 10 or \
             bio_grade > 10 or phys_grade > 10 or chem_grade > 10:
             if self.__debug: print("Invalid input")
@@ -179,19 +179,20 @@ class WindowHandler:
     def calc_affinity(self):
         if self.__debug: print("Calculating affinity")
         result = utils.calculate_affinity()
-
         for key, value in result.items():
             print(key, value)
             self.obj(key + "_pb").set_fraction(value / 10)
             self.obj(key + "_entry").set_text(str(round(value, 2)))
 
 
+# Show and hide window in glade
 class Window:
     @staticmethod
     def show(window_name): WindowHandler().show_window(window_name=window_name)
 
     @staticmethod
     def hide(window_name): WindowHandler().hide_window(window_name=window_name)
+
 
 
 class LoginWindow():
@@ -210,6 +211,15 @@ class LoginWindow():
     def hide(): Window.hide("login_window")
 
 
+class LoginErrorWindow():
+    @staticmethod
+    def show(): Window.show("error_login_dialog")
+
+    @staticmethod
+    def hide(): Window.hide("error_login_dialog")
+
+
+
 class UpdateWindow():
     @staticmethod
     def get_info():
@@ -226,6 +236,15 @@ class UpdateWindow():
     def hide(): Window.hide("updateinfo_window")
 
 
+class UpdateErrorWindow():
+    @staticmethod
+    def show(): Window.show("error_update_dialog")
+
+    @staticmethod
+    def hide(): Window.hide("error_update_dialog")
+
+
+
 class HomeWindow():
     @staticmethod
     def show():
@@ -235,13 +254,6 @@ class HomeWindow():
     @staticmethod
     def hide(): Window.hide("home_window")
 
-
-class LoginErrorWindow():
-    @staticmethod
-    def show(): Window.show("error_login_dialog")
-
-    @staticmethod
-    def hide(): Window.hide("error_login_dialog")
 
 
 class TodoWindow():
@@ -257,12 +269,14 @@ class TodoWindow():
     def hide(): Window.hide("todolist_window")
 
 
+
 class MonitoringWindow:
     @staticmethod
     def show(): Window.show("monitoring_window")
 
     @staticmethod
     def hide(): Window.hide("monitoring_window")
+
 
 
 class SubjectsWindow:
@@ -276,28 +290,6 @@ class SubjectsWindow:
 
     @staticmethod
     def hide(): Window.hide("subjects_window")
-
-
-class AffinityWindow:
-    @staticmethod
-    def load(): WindowHandler().calc_affinity()
-
-    @staticmethod
-    def show(): 
-        Window.show("affinity_window")
-        AffinityWindow.load()
-
-    @staticmethod
-    def hide(): Window.hide("affinity_window")
-
-
-
-class UpdateErrorWindow():
-    @staticmethod
-    def show(): Window.show("error_update_dialog")
-
-    @staticmethod
-    def hide(): Window.hide("error_update_dialog")
 
 
 class GradesErrorWindow:
@@ -314,6 +306,22 @@ class GradesUpdatedWindow:
 
     @staticmethod
     def hide(): Window.hide("grades_updated_window")
+
+
+
+
+class AffinityWindow:
+    @staticmethod
+    def load(): WindowHandler().calc_affinity()
+
+    @staticmethod
+    def show(): 
+        Window.show("affinity_window")
+        AffinityWindow.load()
+
+    @staticmethod
+    def hide(): Window.hide("affinity_window")
+
 
 
 class CriticalErrorWindow():

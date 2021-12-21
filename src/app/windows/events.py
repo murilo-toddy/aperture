@@ -50,7 +50,7 @@ class EventsHandler:
             print(f"Nascimento: {date}")
             print()
 
-        # Validação dos dados de entrada
+        # Validates input data
         valid_input = (Regexes.date.match(date) and name != "" and surname != "")
         if not valid_input:
             self.__invalid_entry(update)
@@ -59,7 +59,7 @@ class EventsHandler:
         return name, surname, date
 
 
-    """Collect user data"""
+    # Collect user data
     def on_login_button_clicked(self, button) -> None:
         try: 
             name, surname, date = self.__get_user_data()
@@ -67,6 +67,7 @@ class EventsHandler:
             utils.register_user(name, surname, date)
         except: 
             return
+            
             
     def on_update_button_clicked(self, button) -> None:
         try:

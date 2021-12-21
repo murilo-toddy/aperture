@@ -29,10 +29,11 @@ def update_user(name: str, surname: str, date: str) -> None:
         w.CriticalErrorWindow.show()
 
 
-def calculate_affinity():
+def calculate_affinity() -> dict:
     query = "SELECT * FROM grade"
     grades = Connection().exec(query, func=lambda cur: cur.fetchall())
 
+    # Gets grades from query
     port_grade = grades[0][1]
     math_grade = grades[1][1]
     hist_grade = grades[2][1]
@@ -44,13 +45,14 @@ def calculate_affinity():
     hum_grade = (hist_grade + geo_grade) / 2
     sci_grade = (bio_grade + phys_grade + chem_grade) / 3
 
+    # Calculates affinity using ENEM defined percentages
     return {
-        "law": (2*port_grade + 1*math_grade + 3*hum_grade + 1*sci_grade)     / 7,
-        "eng": (2*port_grade + 3*math_grade + 1*hum_grade + 3*sci_grade)     / 9,
-        "adm": (3*port_grade + 2.5*math_grade + 2*hum_grade + 0.5*sci_grade) / 8,
-        "psy": (1.5*port_grade + 1*math_grade + 3*hum_grade + 2*sci_grade)   / 7.5,
-        "cc" : (2*port_grade + 3*math_grade + 1*hum_grade + 3*sci_grade)     / 9,
-        "med": (2*port_grade + 2.5*math_grade + 1*hum_grade + 3.5*sci_grade) / 9
+        "law": (2*port_grade   + 1*math_grade   + 3*hum_grade + 1*sci_grade)   / 7,
+        "eng": (2*port_grade   + 3*math_grade   + 1*hum_grade + 3*sci_grade)   / 9,
+        "adm": (3*port_grade   + 2.5*math_grade + 2*hum_grade + 0.5*sci_grade) / 8,
+        "psy": (1.5*port_grade + 1*math_grade   + 3*hum_grade + 2*sci_grade)   / 7.5,
+        "cc" : (2*port_grade   + 3*math_grade   + 1*hum_grade + 3*sci_grade)   / 9,
+        "med": (2*port_grade   + 2.5*math_grade + 1*hum_grade + 3.5*sci_grade) / 9
     }
 
 
