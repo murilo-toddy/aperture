@@ -1,3 +1,4 @@
+-- Limpeza do sistema
 DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;
 
@@ -16,29 +17,19 @@ CREATE TABLE tasks (
 );
 
 
--- Tabela de disciplinas
-CREATE TABLE subject (
-    name        VARCHAR(10)     NOT NULL,
-    CONSTRAINT pk_subject PRIMARY KEY (name)
-);
-
 -- Tabela de Notas
 CREATE TABLE grade (
     subject     VARCHAR(10)     NOT NULL,
     grade       FLOAT           NOT NULL,
-
-    CONSTRAINT pk_grade PRIMARY KEY (subject),
-    CONSTRAINT fk_grade FOREIGN KEY (subject)
-                REFERENCES subject (name)
-                ON DELETE CASCADE
+    CONSTRAINT pk_grade PRIMARY KEY (subject)
 );
 
 
 -- Inserção de disciplinas base
-INSERT INTO subject (name) VALUES ('Português');
-INSERT INTO subject (name) VALUES ('Matemática');
-INSERT INTO subject (name) VALUES ('História');
-INSERT INTO subject (name) VALUES ('Geografia');
-INSERT INTO subject (name) VALUES ('Biologia');
-INSERT INTO subject (name) VALUES ('Física');
-INSERT INTO subject (name) VALUES ('Química');
+INSERT INTO grade (subject, grade) VALUES ('Português',   0);
+INSERT INTO grade (subject, grade) VALUES ('Matemática',  0);
+INSERT INTO grade (subject, grade) VALUES ('História',    0);
+INSERT INTO grade (subject, grade) VALUES ('Geografia',   0);
+INSERT INTO grade (subject, grade) VALUES ('Biologia',    0);
+INSERT INTO grade (subject, grade) VALUES ('Física',      0);
+INSERT INTO grade (subject, grade) VALUES ('Química',     0);
