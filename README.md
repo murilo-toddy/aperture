@@ -7,7 +7,6 @@
 1. Todo-List
 2. Acompanhamento de Notas
 3. Áreas de Afinidade
-4. Calendário de Vestibulares
 
 
 ## Construção:
