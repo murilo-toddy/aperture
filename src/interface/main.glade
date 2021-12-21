@@ -856,7 +856,9 @@ abaixo.</property>
                         <property name="can-focus">True</property>
                         <property name="model">todolist</property>
                         <child internal-child="selection">
-                          <object class="GtkTreeSelection"/>
+                          <object class="GtkTreeSelection">
+                            <signal name="changed" handler="set_selected_todo_task" swapped="no"/>
+                          </object>
                         </child>
                       </object>
                     </child>

@@ -126,13 +126,19 @@ class EventsHandler:
 
     def on_addtask_button_clicked(self, button) -> None:
         w.WindowHandler().add_task()
-        print("Add button clicked")
-
+        if self.__debug:
+            print("Add task button clicked")
+            
     def on_deletetask_button_clicked(self, button) -> None:
-        print("Delete task button clicked")
+        w.WindowHandler().remove_task()
 
     def on_todohome_button_clicked(self, button) -> None:
         if self.__debug:
             print("Home button clicked")
         w.TodoWindow.hide()
+
+    def set_selected_todo_task(self, user_data):
+        w.WindowHandler().update_selected_task(user_data)
+
+        
 

@@ -51,7 +51,7 @@ class WindowHandler:
             f"Seja bem vindo(a),\n{self.name} {self.surname}"
         )
 
-
+    # Todo Handlers
     def load_todo(self):
         if self.__debug:
             print("Loading tasks")
@@ -70,11 +70,33 @@ class WindowHandler:
         self.tasks_tree_view.append_column(col)
         self.tasks_tree_view.set_model(self.task_list_store)
 
+    def update_selected_task(self, user_data):
+        selected = user_data.get_selected()[1]
+        if selected:
+            self.selected_task = selected
 
     def add_task(self):
+        if self.__debug:
+            print("Adding task")
+        
+        query = "INSERT INTO tasks (name) VALUES (%s)"
         add_task = self.obj("add_task_entry").get_text().strip()
-        self.task_list_store.append([add_task])
+        try:
+            Connection().exec_and_commit(query, add_task)
+            self.task_list_store.append([add_task])
+        except:
+            print("You cannot have duplicate task names") 
 
+    def remove_task(self):
+        query = "DELETE FROM tasks WHERE name = %s"
+        task_name = self.task_list_store.get_value(self.selected_task, 0)
+
+        try:
+            Connection().exec_and_commit(query, task_name)
+            self.task_list_store.remove(self.selected_task)
+        except:
+            print("Database error")
+        
 
 
 
