@@ -25,20 +25,17 @@ class WindowHandler:
     def get_text(self, field): return self.obj(field).get_text()
     def update_obj(self): self.obj = self.builder.get_object
 
-
     def show_window(self, window_name: str):
-        if self.__debug:
-            print(f"Opening {window_name}")
+        if self.__debug: print(f"Opening {window_name}")
         self.update_obj()
         self.obj(window_name).show()
 
-
     def hide_window(self, window_name: str):
-        if self.__debug:
-            print(f"Hiding {window_name}")
+        if self.__debug: print(f"Hiding {window_name}")
         self.obj(window_name).close()
         
 
+    # Home Window Handlers
     def load_default_config(self):
         query = "SELECT * FROM user_info"
         user = Connection().exec(query, func=lambda cur: cur.fetchall())
@@ -52,7 +49,7 @@ class WindowHandler:
         )
 
 
-    # Todo Handlers
+    # Todo List Window Handlers
     def load_todo(self):
         if self.__debug:
             print("Loading tasks")
@@ -60,7 +57,7 @@ class WindowHandler:
         self.tasks_tree_view = self.obj("todo_treeview")
         self.task_list_store = Gtk.ListStore(str)
 
-        query = "SELECT * FROM tasks"
+        query = "SELECT * FROM tasks ORDER BY name ASC"
         tasks = Connection().exec(query, func=lambda cur: cur.fetchall())
         
         for task in tasks:
@@ -81,14 +78,16 @@ class WindowHandler:
     def add_task(self):
         if self.__debug:
             print("Adding task")
-        
-        query = "INSERT INTO tasks (name) VALUES (%s)"
+
         add_task = self.obj("add_task_entry").get_text().strip()
-        try:
-            Connection().exec_and_commit(query, add_task)
-            self.task_list_store.append([add_task])
-        except:
-            print("You cannot have duplicate task names") 
+        if add_task != "":
+            query = "INSERT INTO tasks (name) VALUES (%s)"
+            try:
+                self.obj("add_task_entry").set_text("")
+                Connection().exec_and_commit(query, add_task)
+                self.task_list_store.append([add_task])
+            except:
+                print("You cannot have duplicate task names") 
 
 
     def remove_task(self):
@@ -104,6 +103,27 @@ class WindowHandler:
             self.task_list_store.remove(self.selected_task)
         except:
             print("Database error")
+
+
+    # Monitoring Window Handler
+    def load_subjects(self):
+        print("Loading grades")
+        # if self.__debug:
+        #     print("Loading subjects")
+
+        # self.tasks_tree_view = self.obj("todo_treeview")
+        # self.task_list_store = Gtk.ListStore(str)
+
+        # query = "SELECT * FROM subjects"
+        # subjects = Connection().exec(query, func=lambda cur: cur.fetchall())
+        
+        # for subject in subjects:
+        #     self.task_list_store.append(list(task))
+
+        # renderer = Gtk.CellRendererText()
+        # col = Gtk.TreeViewColumn(title="Tasks", cell_renderer=renderer, text=0)
+        # self.tasks_tree_view.append_column(col)
+        # self.tasks_tree_view.set_model(self.task_list_store)
         
 
 
@@ -168,8 +188,7 @@ class LoginErrorWindow():
 
 class TodoWindow():
     @staticmethod
-    def load():
-        WindowHandler().load_todo()
+    def load(): WindowHandler().load_todo()
 
     @staticmethod
     def show(): 
@@ -178,6 +197,36 @@ class TodoWindow():
 
     @staticmethod
     def hide(): Window.hide("todolist_window")
+
+
+class MonitoringWindow:
+    @staticmethod
+    def show(): Window.show("monitoring_window")
+
+    @staticmethod
+    def hide(): Window.hide("monitoring_window")
+
+
+class SubjectsWindow:
+    @staticmethod
+    def load(): WindowHandler().load_subjects()
+
+    @staticmethod
+    def show():
+        Window.show("subjects_window")
+        SubjectsWindow.load()
+
+    @staticmethod
+    def hide(): Window.hide("subjects_window")
+
+
+class AffinityWindow:
+    @staticmethod
+    def show(): Window.show("affinity_window")
+
+    @staticmethod
+    def hide(): Window.hide("affinity_window")
+
 
 
 class UpdateErrorWindow():

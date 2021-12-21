@@ -90,29 +90,24 @@ class EventsHandler:
 
     
     def on_acomp_button_clicked(self, button) -> None:
-        print("Acomp button clicked")
-
-    
-    """Calendar Events"""
-    def on_calendar_button_clicked(self, button) -> None:
-        print("Calendar button clicked")
+        w.HomeWindow.hide()
+        w.MonitoringWindow.show()
 
 
-    """Update Info Events"""
+    # Update Info Events
     def on_updateinfo_button_clicked(self, button) -> None:
         if self.__debug:
             print("Update info button clicked")
         
         w.HomeWindow.hide()
         w.UpdateWindow.show()
-
     
     def on_updateinfo_window_remove(self, *args) -> None:
         w.UpdateWindow.hide()
         w.HomeWindow.show()
 
 
-    """Critical Error Events"""
+    # Critical Error Events
     def on_criticalerror_button_clicked(self, button) -> None:
         w.CriticalErrorWindow.hide()
 
@@ -120,7 +115,7 @@ class EventsHandler:
         Gtk.main_quit()
 
 
-    """Todo List Events"""
+    # ToDo List Events
     def on_todolist_window_remove(self, *args):
         w.HomeWindow.show()
 
@@ -128,7 +123,7 @@ class EventsHandler:
         w.WindowHandler().add_task()
         if self.__debug:
             print("Add task button clicked")
-            
+
     def on_deletetask_button_clicked(self, button) -> None:
         w.WindowHandler().remove_task()
 
@@ -137,8 +132,49 @@ class EventsHandler:
             print("Home button clicked")
         w.TodoWindow.hide()
 
-    def set_selected_todo_task(self, user_data):
+    def set_selected_todo_task(self, user_data) -> None:
         w.WindowHandler().update_selected_task(user_data)
+
+
+    # Monitoring Events
+    def on_monitoring_window_remove(self, *args) -> None:
+        if self.__debug: print("Monitoring window closed")
+
+    def on_monitorhome_button_clicked(self, button) -> None:
+        if self.__debug:
+            print("Home button clicked")
+        w.MonitoringWindow.hide()
+        w.HomeWindow.show()
+
+    def on_subject_button_clicked(self, button) -> None:
+        w.MonitoringWindow.hide()
+        w.SubjectsWindow.show()
+
+    def on_affinity_button_clicked(self, button) -> None:
+        w.MonitoringWindow.hide()
+        w.AffinityWindow.show()
+
+
+    # Subjects Events
+    def on_subjectback_button_pressed(self, button) -> None:
+        if self.__debug:
+            print("Back button pressed")
+        w.SubjectsWindow.hide()
+
+    def on_subjects_window_remove(self, *args) -> None:
+        w.MonitoringWindow.show()
+
+    def on_savegrades_button_pressed(self, button) -> None:
+        
+        print("Saving grades")
+
+
+    # Affinity Events
+    def on_affinityback_button_pressed(self, button) -> None:
+        w.AffinityWindow.hide()
+
+    def on_affinity_window_remove(self, *args) -> None:
+        w.MonitoringWindow.show()
 
         
 
