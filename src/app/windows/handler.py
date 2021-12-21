@@ -21,6 +21,16 @@ class WindowHandler:
         if self.__debug:
             print("Established connection with Glade")
 
+        self.__grade_relation = {
+            "Português": "portuguese_grade",
+            "Matemática": "math_grade",
+            "História": "history_grade",
+            "Geografia": "geography_grade",
+            "Biologia": "biology_grade",
+            "Física": "physics_grade",
+            "Química": "chemistry_grade"
+        }
+
 
     def get_text(self, field): return self.obj(field).get_text()
     def update_obj(self): self.obj = self.builder.get_object
@@ -106,24 +116,68 @@ class WindowHandler:
 
 
     # Monitoring Window Handler
-    def load_subjects(self):
-        print("Loading grades")
-        # if self.__debug:
-        #     print("Loading subjects")
+    def load_grades(self):
+        if self.__debug: print("Loading grades")
+        query = "SELECT * FROM grade"
+        grades = Connection().exec(query, func=lambda cur: cur.fetchall())
+        for (subject, grade) in grades:
+            entry = self.__grade_relation[subject]
+            self.obj(entry).set_text(str(round(grade, 2)))
 
-        # self.tasks_tree_view = self.obj("todo_treeview")
-        # self.task_list_store = Gtk.ListStore(str)
 
-        # query = "SELECT * FROM subjects"
-        # subjects = Connection().exec(query, func=lambda cur: cur.fetchall())
+    def __update_grade(self, subject, grade) -> None:
+        query = "UPDATE grade SET grade = %s WHERE subject = %s"
+        Connection().exec_and_commit(query, grade, subject)
+
+
+    def __saving_grades_error(self):
+        SubjectsWindow.hide()
+        GradesErrorWindow.show()
+
+    def __saving_grades_success(self):
+        SubjectsWindow.hide()
+        GradesUpdatedWindow.show()
+
+    def save_grades(self) -> None:
+        if self.__debug: print("Saving grades")
+
+        try:
+            port_grade = float(self.obj("portuguese_grade").get_text())
+            math_grade = float(self.obj("math_grade").get_text())
+            hist_grade = float(self.obj("history_grade").get_text())
+            geo_grade  = float(self.obj("geography_grade").get_text())
+            bio_grade  = float(self.obj("biology_grade").get_text())
+            phys_grade = float(self.obj("physics_grade").get_text())
+            chem_grade = float(self.obj("chemistry_grade").get_text())
+        except ValueError:
+            if self.__debug: print("Invalid input")
+            self.__saving_grades_error()
+            return
+
+        if port_grade > 10 or math_grade > 10 or hist_grade > 10 or geo_grade > 10 or \
+            bio_grade > 10 or phys_grade > 10 or chem_grade > 10:
+            if self.__debug: print("Invalid input")
+            self.__saving_grades_error()
+            return
+
+        try:
+            self.__update_grade("Português",  port_grade)
+            self.__update_grade("Matemática", math_grade)
+            self.__update_grade("História",   hist_grade)
+            self.__update_grade("Geografia",  geo_grade )
+            self.__update_grade("Biologia",   bio_grade )
+            self.__update_grade("Física",     phys_grade)
+            self.__update_grade("Química",    chem_grade)
+        except:
+            if self.__debug: print("Database error")
+            self.__saving_grades_error()
+
+        self.__saving_grades_success()
+
+
         
-        # for subject in subjects:
-        #     self.task_list_store.append(list(task))
 
-        # renderer = Gtk.CellRendererText()
-        # col = Gtk.TreeViewColumn(title="Tasks", cell_renderer=renderer, text=0)
-        # self.tasks_tree_view.append_column(col)
-        # self.tasks_tree_view.set_model(self.task_list_store)
+
         
 
 
@@ -209,7 +263,7 @@ class MonitoringWindow:
 
 class SubjectsWindow:
     @staticmethod
-    def load(): WindowHandler().load_subjects()
+    def load(): WindowHandler().load_grades()
 
     @staticmethod
     def show():
@@ -235,6 +289,22 @@ class UpdateErrorWindow():
 
     @staticmethod
     def hide(): Window.hide("error_update_dialog")
+
+
+class GradesErrorWindow:
+    @staticmethod
+    def show(): Window.show("grades_invalidinput_error")
+
+    @staticmethod
+    def hide(): Window.hide("grades_invalidinput_error")
+
+
+class GradesUpdatedWindow:
+    @staticmethod
+    def show(): Window.show("grades_updated_window")
+
+    @staticmethod
+    def hide(): Window.hide("grades_updated_window")
 
 
 class CriticalErrorWindow():

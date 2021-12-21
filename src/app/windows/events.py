@@ -160,13 +160,27 @@ class EventsHandler:
         if self.__debug:
             print("Back button pressed")
         w.SubjectsWindow.hide()
-
-    def on_subjects_window_remove(self, *args) -> None:
         w.MonitoringWindow.show()
 
+    def on_subjects_window_remove(self, *args) -> None:
+        if self.__debug: print("Subjects window closed")
+
     def on_savegrades_button_pressed(self, button) -> None:
-        
-        print("Saving grades")
+        w.WindowHandler().save_grades()
+
+    def on_inputerror_grade_button_clicked(self, button) -> None:
+        w.GradesErrorWindow.hide()
+        w.SubjectsWindow.show()
+
+    def on_grades_invalidinput_error_close(self, *args) -> None:
+        w.SubjectsWindow.show()
+
+    def on_gradesupdated_button_clicked(self, button) -> None:
+        w.GradesUpdatedWindow.hide()
+        w.SubjectsWindow.show()
+
+    def on_gradesupdated_close(self, *args) -> None:
+        w.SubjectsWindow.show()
 
 
     # Affinity Events
