@@ -216,7 +216,7 @@
                 <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkEntry">
+                  <object class="GtkEntry" id="law_entry">
                     <property name="name">law_percent</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -231,7 +231,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkProgressBar">
+                  <object class="GtkProgressBar" id="law_pb">
                     <property name="name">law_bar</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
@@ -257,7 +257,7 @@
                 <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkEntry">
+                  <object class="GtkEntry" id="eng_entry">
                     <property name="name">eng_percent</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -272,7 +272,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkProgressBar">
+                  <object class="GtkProgressBar" id="eng_pb">
                     <property name="name">eng_bar</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
@@ -298,7 +298,7 @@
                 <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkEntry">
+                  <object class="GtkEntry" id="adm_entry">
                     <property name="name">adm_percent</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -313,7 +313,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkProgressBar">
+                  <object class="GtkProgressBar" id="adm_pb">
                     <property name="name">adm_bar</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
@@ -339,7 +339,7 @@
                 <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkEntry">
+                  <object class="GtkEntry" id="psy_entry">
                     <property name="name">psy_percent</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -354,7 +354,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkProgressBar">
+                  <object class="GtkProgressBar" id="psy_pb">
                     <property name="name">psy_bar</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
@@ -380,7 +380,7 @@
                 <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkEntry">
+                  <object class="GtkEntry" id="cc_entry">
                     <property name="name">cc_percent</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -395,7 +395,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkProgressBar">
+                  <object class="GtkProgressBar" id="cc_pb">
                     <property name="name">cc_bar</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
@@ -421,7 +421,7 @@
                 <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkEntry">
+                  <object class="GtkEntry" id="med_entry">
                     <property name="name">med_percent</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -436,7 +436,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkProgressBar">
+                  <object class="GtkProgressBar" id="med_pb">
                     <property name="name">med_bar</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>

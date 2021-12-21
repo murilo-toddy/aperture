@@ -2,6 +2,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
+import utils
 import windows.events as events
 from connection import Connection
 
@@ -115,7 +116,7 @@ class WindowHandler:
             print("Database error")
 
 
-    # Monitoring Window Handler
+    # Grades Window Handler
     def load_grades(self):
         if self.__debug: print("Loading grades")
         query = "SELECT * FROM grade"
@@ -123,7 +124,6 @@ class WindowHandler:
         for (subject, grade) in grades:
             entry = self.__grade_relation[subject]
             self.obj(entry).set_text(str(round(grade, 2)))
-
 
     def __update_grade(self, subject, grade) -> None:
         query = "UPDATE grade SET grade = %s WHERE subject = %s"
@@ -175,11 +175,15 @@ class WindowHandler:
         self.__saving_grades_success()
 
 
-        
+    # Affinity Window Handler
+    def calc_affinity(self):
+        if self.__debug: print("Calculating affinity")
+        result = utils.calculate_affinity()
 
-
-        
-
+        for key, value in result.items():
+            print(key, value)
+            self.obj(key + "_pb").set_fraction(value / 10)
+            self.obj(key + "_entry").set_text(str(round(value, 2)))
 
 
 class Window:
@@ -276,7 +280,12 @@ class SubjectsWindow:
 
 class AffinityWindow:
     @staticmethod
-    def show(): Window.show("affinity_window")
+    def load(): WindowHandler().calc_affinity()
+
+    @staticmethod
+    def show(): 
+        Window.show("affinity_window")
+        AffinityWindow.load()
 
     @staticmethod
     def hide(): Window.hide("affinity_window")
