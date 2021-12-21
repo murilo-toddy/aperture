@@ -180,7 +180,6 @@ class WindowHandler:
         if self.__debug: print("Calculating affinity")
         result = utils.calculate_affinity()
         for key, value in result.items():
-            print(key, value)
             self.obj(key + "_pb").set_fraction(value / 10)
             self.obj(key + "_entry").set_text(str(round(value, 2)))
 

@@ -21,12 +21,11 @@ def register_user(name: str, surname: str, date: str) -> None:
 
 
 def update_user(name: str, surname: str, date: str) -> None:
-    try:
-        query = "UPDATE user_info SET name = %s, surname = %s, birthday = TO_DATE(%s, 'DD/MM/YYYY')"
-        Connection().exec_and_commit(query, name, surname, date)
-        print("Personal info updated")
-    except:
-        w.CriticalErrorWindow.show()
+    query = "UPDATE user_info SET name = %s, surname = %s, birthday = TO_DATE(%s, 'DD/MM/YYYY')"
+    Connection().exec_and_commit(query, name, surname, date)
+    print("Personal info updated")
+    w.UpdateWindow.hide()
+    w.HomeWindow.show()
 
 
 def calculate_affinity() -> dict:

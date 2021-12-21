@@ -746,6 +746,7 @@ Verifique os dados e tente novamente</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
+                <signal name="clicked" handler="on_error_update_button_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>

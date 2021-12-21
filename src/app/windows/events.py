@@ -33,6 +33,10 @@ class EventsHandler:
         w.LoginErrorWindow.hide()
         w.LoginWindow.show()
 
+    def on_error_update_button_clicked(self, button) -> None:
+        w.UpdateErrorWindow.hide()
+        w.UpdateWindow.show()
+
 
     def __get_user_data(self, update=False):
         if self.__debug:
@@ -63,12 +67,11 @@ class EventsHandler:
     def on_login_button_clicked(self, button) -> None:
         try: 
             name, surname, date = self.__get_user_data()
-            print(name, surname, date)
             utils.register_user(name, surname, date)
         except: 
             return
             
-            
+
     def on_update_button_clicked(self, button) -> None:
         try:
             name, surname, date = self.__get_user_data(update=True)
@@ -104,8 +107,9 @@ class EventsHandler:
         w.UpdateWindow.show()
     
     def on_updateinfo_window_remove(self, *args) -> None:
-        w.UpdateWindow.hide()
-        w.HomeWindow.show()
+        if self.__debug: print("Update Window closed")
+         # w.UpdateWindow.hide()
+        # w.HomeWindow.show()
 
 
     # Critical Error Events
