@@ -82,7 +82,11 @@ class EventsHandler:
 
 
     def on_todo_button_clicked(self, button) -> None:
-        print("Todo button clicked")
+        if self.__debug:
+            print("Todo button clicked")
+
+        w.HomeWindow.hide()
+        w.TodoWindow.show()
 
     
     def on_acomp_button_clicked(self, button) -> None:
@@ -114,3 +118,21 @@ class EventsHandler:
 
     def on_criticalerror_window_remove(self, *args) -> None:
         Gtk.main_quit()
+
+
+    """Todo List Events"""
+    def on_todolist_window_remove(self, *args):
+        w.HomeWindow.show()
+
+    def on_addtask_button_clicked(self, button) -> None:
+        w.WindowHandler().add_task()
+        print("Add button clicked")
+
+    def on_deletetask_button_clicked(self, button) -> None:
+        print("Delete task button clicked")
+
+    def on_todohome_button_clicked(self, button) -> None:
+        if self.__debug:
+            print("Home button clicked")
+        w.TodoWindow.hide()
+

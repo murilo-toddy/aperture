@@ -32,6 +32,7 @@ class WindowHandler:
         self.update_obj()
         self.obj(window_name).show()
 
+
     def hide_window(self, window_name: str):
         if self.__debug:
             print(f"Hiding {window_name}")
@@ -49,6 +50,31 @@ class WindowHandler:
         self.obj("home_personal_info").set_text(
             f"Seja bem vindo(a),\n{self.name} {self.surname}"
         )
+
+
+    def load_todo(self):
+        if self.__debug:
+            print("Loading tasks")
+
+        self.tasks_tree_view = self.obj("todo_treeview")
+        self.task_list_store = Gtk.ListStore(str)
+
+        query = "SELECT * FROM tasks"
+        tasks = Connection().exec(query, func=lambda cur: cur.fetchall())
+        
+        for task in tasks:
+            self.task_list_store.append(list(task))
+
+        renderer = Gtk.CellRendererText()
+        col = Gtk.TreeViewColumn(title="Tasks", cell_renderer=renderer, text=0)
+        self.tasks_tree_view.append_column(col)
+        self.tasks_tree_view.set_model(self.task_list_store)
+
+
+    def add_task(self):
+        add_task = self.obj("add_task_entry").get_text().strip()
+        self.task_list_store.append([add_task])
+
 
 
 
@@ -108,6 +134,20 @@ class LoginErrorWindow():
 
     @staticmethod
     def hide(): Window.hide("error_login_dialog")
+
+
+class TodoWindow():
+    @staticmethod
+    def load():
+        WindowHandler().load_todo()
+
+    @staticmethod
+    def show(): 
+        Window.show("todolist_window")
+        TodoWindow.load()
+
+    @staticmethod
+    def hide(): Window.hide("todolist_window")
 
 
 class UpdateErrorWindow():
